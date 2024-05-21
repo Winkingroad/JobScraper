@@ -62,6 +62,31 @@ node main.js
 
 This will scrape job listings, fetch detailed job and company details, and save them to DynamoDB tables.
 
+### Deploying to AWS Lambda
+
+To deploy the scraper to AWS Lambda, follow these steps:
+
+1. Create a new Lambda function in the AWS Management Console.
+2. Set the runtime to Node.js 14.x.
+3. Create a new deployment package by running:
+
+```bash
+npm run build
+```
+
+This will create a `dist` folder with the necessary files for deployment.
+
+4. Zip the contents of the `dist` folder and upload the zip file to the Lambda function.
+5. Set the handler to main.handler (assuming you're using the main.js file as the entry point).
+6. Adjust the memory and timeout settings as needed.
+7. Add any necessary environment variables (e.g., AWS credentials).
+8. Deploy the function.
+
+#### Note: 
+
+***The scraper may take longer to run on AWS Lambda due to the cold start time and other limitations. Make sure to adjust the timeout settings accordingly.***
+
+
 ## Performance Considerations
 
 - **Efficiency**: The scripts are designed to be efficient and structured to run smoothly in a local environment.
