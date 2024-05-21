@@ -1,70 +1,78 @@
 # Remote Job Scraper
 
-This project is designed to scrape remote job listings from the homepage of remote.co, extract comprehensive job and company details, and store them either locally or in an AWS DynamoDB table.
+A Node.js web scraper that fetches remote job listings from various categories and extracts detailed job and company information. The scraper can save the data locally or store it in AWS DynamoDB tables.
 
-## Functionality
+## Features
 
-1. **Scraping Job Listings**: The script fetches category URLs from remote.co and scrapes job listings from each category.
+- Fetch Category URLs: Fetch URLs for various job categories like software development, design, marketing, etc.
+- Scrape Job Listings: Scrape job listings from remote job boards like We Work Remotely, Remote.co, and others.
+- Fetch Detailed Job Details: Extract detailed job information like job description, company name, location, and more.
+- Fetch Company Details: Fetch comprehensive company details like company size, industry, website, and more.
+- Save Data Locally: Save job and company details to local JSON files for further processing.
+- Save Data to DynamoDB: Save job and company details to AWS DynamoDB tables for scalable storage.
 
-2. **Extracting Job Details**: It extracts various details about each job, including the job title, company name, job location, description URL, and detailed description from the individual job's page.
+## Prerequisites
 
-3. **Extracting Company Details**: Additionally, the script extracts comprehensive company information where available, such as the company website, logo URL, description, funding information, and any other available details.
+- Node.js installed on your machine.
+- An AWS account with access to DynamoDB (for saving data to DynamoDB).
 
-## How to Run Locally
+## Installation
 
-1. **Setup**: Ensure you have Node.js installed on your machine.
+Clone the repository:
 
-2. **Installation**: Run `npm install` to install the necessary dependencies.
+```bash
+git clone https://github.com/Winkingroad/JobScraper.git
+```
 
-3. **Scrape Category URLs**: Execute the `fetchCategoryUrls.js` script to fetch category URLs and save them to `categories.json`.
+Install dependencies:
 
-4. **Run Main Script**: Execute the `main.js` script to scrape job listings, fetch detailed job and company details, and save them locally.
+```bash
+cd remote-job-scraper
+npm install
+```
 
-## How to Run on DynamoDB
+## Usage
 
-1. **Setup AWS Credentials**: Ensure you have AWS credentials configured on your machine with access to DynamoDB.
+### Running Locally
 
-2. **Setup DynamoDB Tables**: Create two DynamoDB tables named `RemoteCoJobs` and `RemoteCoCompanies` with appropriate attributes for job and company details.
+Fetch category URLs:
 
-3. **Update AWS Credentials**: Update the AWS credentials in the `saveDetailsToDynamoDB.js` script with your AWS access key ID and secret access key.
+```bash
+node fetchCategoryUrls.js
+```
 
-4. **Run Main Script**: Execute the `main.js` script, which orchestrates the entire process. This will scrape job listings, fetch detailed job and company details, and save them to DynamoDB tables.
+Run the main script:
+
+```bash
+node main.js
+```
+
+This will scrape job listings, fetch detailed job and company details, and save them locally.
+
+### Running on DynamoDB
+
+1. Set up AWS credentials with access to DynamoDB.
+2. Create two DynamoDB tables named `RemoteCoJobs` and `RemoteCoCompanies` with appropriate attributes.
+3. Update AWS credentials in `saveDetailsToDynamoDB.js` with your access key ID and secret access key.
+4. Run the main script:
+
+```bash
+node main.js
+```
+
+This will scrape job listings, fetch detailed job and company details, and save them to DynamoDB tables.
 
 ## Performance Considerations
 
-1. **Efficiency**: The scripts are designed to be efficient and structured to run smoothly in a local environment.
+- **Efficiency**: The scripts are designed to be efficient and structured to run smoothly in a local environment.
+- **Lightweight**: The code is lightweight and less resource-intensive to ensure smooth operation in an AWS Lambda deployment.
+- **Minimal Dependencies**: The project uses minimal dependencies to avoid unnecessary overhead.
 
-2. **Lightweight**: The code is lightweight and less resource-intensive to ensure smooth operation in an AWS Lambda deployment.
+## Project Structure
 
-3. **Minimal Dependencies**: The project uses minimal dependencies to avoid unnecessary overhead.
-
-## Data Storage
-
-1. **Local Storage**: Job and company details can be saved locally in JSON format for easy viewing.
-
-2. **DynamoDB Storage**: Optionally, job and company details can be stored in DynamoDB tables. The scripts ensure deduplication to avoid storing duplicate data.
-
-### mainScrapper.js
-
-**mainScrapper.js** is the main script that orchestrates the entire process of scraping job listings, fetching detailed job and company details, and saving them locally.
-
-### fetchCategoryUrls.js
-
-**fetchCategoryUrls.js** is a script that fetches category URLs from remote.co and saves them to `categories.json`.
-
-### fetchBasicJobDetails.js
-
-**fetchBasicJobDetails.js** is a script that scrapes job listings from category URLs and saves basic job details to `jobsDataBasic.json`.
-
-### fetchDetailedJobDetails.js
-
-**fetchDetailedJobDetails.js** is a script that fetches detailed job details from individual job pages and saves them to dynamoDB and console them for easy viewing.
-
-### fetchCompanyDetails.js
-
-**fetchCompanyDetails.js** is a script that fetches comprehensive company details from individual job pages and saves them to dynamoDB and console them for easy viewing.
-
-### saveDetailsToDynamoDB.js
-
-**saveDetailsToDynamoDB.js** is a script that saves job and company details to DynamoDB tables.
-
+- `mainScrapper.js`: The main script that orchestrates the entire process.
+- `fetchCategoryUrls.js`: Fetches category URLs and saves them to `categories.json`.
+- `fetchBasicJobDetails.js`: Scrapes job listings and saves basic job details to `jobsDataBasic.json`.
+- `fetchDetailedJobDetails.js`: Fetches detailed job details and saves them to DynamoDB.
+- `fetchCompanyDetails.js`: Fetches comprehensive company details and saves them to DynamoDB.
+- `saveDetailsToDynamoDB.js`: Saves job and company details to DynamoDB tables.
